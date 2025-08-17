@@ -17,10 +17,13 @@ Call2 = PyTgCalls(client)
 client.start()
 Call.start()
 glitch = False
+is_playing = False
 
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"^\.play(?:\s+(.*))?$"))
 async def play(event):
+    global is_playing
+    global glitch
     file_name = event.pattern_match.group(1)
     if not file_name:
         return await event.edit("Please give me file name.")
@@ -31,12 +34,17 @@ async def play(event):
     if not chat_id:
         return await event.edit("Please give me chat id in saved message.")
     try:
+        #if glitch:
+            #await Call.play
         await Call.play(chat_id, file)
+        await event.edit("successfully playing..")
+        is_playing = True
     except Exception as e:
         print(f"Error: {str(e)}")
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"^\.glitch(?:\s+(.*))?$"))
 async def glitch(event):
+    global glitch 
     status = event.pattern_match.group(1)
     if not status:
         return await event.edit("on or off?")
@@ -122,6 +130,22 @@ async def show(event):
     result = "\n".join([f"{i}: {file}" for i, file in enumerate(files, start=1)])
     await event.edit(result)
     
+@client.on(events.NewMessage(outgoing=True, pattern=r"^\.end"))
+async def end(event):
+    global is_playing
+    global glitch
+    if is_playing:
+        chat_id = await get_chat_id()
+        if not chat_id:
+            return await event.edit("Please give me chat id in saved message.")
+        try:
+            await Call.leave_call(chat_id)
+            if glitch:
+                await Call2.leave_call(chat_id)
+            return await event.edit("successfully stopped.")
+        except Exception as e:
+            return await event.edit(f"Error: {str(e)}")
+            
 async def get_chat_id():
     async for msg in client.iter_messages("me", limit=1):
         if msg and msg.text:
@@ -131,5 +155,6 @@ async def get_chat_id():
             except ValueError:
                 return None
     return None
+    
     
 client.run_until_disconnected()
