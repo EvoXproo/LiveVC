@@ -13,11 +13,26 @@ string_session = os.environ["session"]
 
 client = TelegramClient(StringSession(string_session), api_id, api_hash)
 Call = PyTgCalls(client)
-Call2 = PyTgCalls(client_2)
+Call2 = PyTgCalls(client)
 client.start()
 Call.start()
 glitch = False
 
+
+@client.on(events.NewMessage(outgoing=True, pattern=r"^\.play(?:\s+(.*))?$"))
+async def play(event):
+    file_name = event.pattern_match.group(1)
+    if not file_name:
+        return await event.edit("Please give me file name.")
+    if not os.path.exists(f"files/file_name"):
+        return await event.edut(f"{file_name} was not found.")
+    chat_id = await get_chat_id()
+    if not chat_id:
+        return await event.edit("Please give me chat id in saved message.")
+    try:
+        await Call.play(chat_id, file_name)
+    except Exception as e:
+        print(f"Error: {str(e)}")
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"^\.glitch(?:\s+(.*))?$"))
 async def glitch(event):
@@ -26,11 +41,11 @@ async def glitch(event):
         return await event.edit("on or off?")
     if status == "on":
         glitch = True
-        await event.edit("glitch turned on.")
-        Call2.start()
+        await Call2.start()
+        return await event.edit("glitch turned on.")
     if status == "off":
         glitch = False
-        await event.edit("glitch turned off")
+        return await event.edit("glitch turned off")
     else:
         return await event.edit("on or off?")
 
@@ -105,5 +120,14 @@ async def show(event):
         return await event.edit("Folder are empty.")
     result = "\n".join([f"{i}: {file}" for i, file in enumerate(files, start=1)])
     await event.edit(result)
+    
+async def get_chat_id():
+    async for msg in client.iter_messages("me", limit=1):
+        try:
+            chat_id = int(msg)
+            return chat_id
+        except Exception:
+            chat_id = None
+            return chat_id
     
 client.run_until_disconnected()
