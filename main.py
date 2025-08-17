@@ -1,7 +1,7 @@
 from telethon import events
 from telethon import TelegramClient
 from telethon.sessions import StringSession
-#from pytgcalls import PyTgCalls
+from pytgcalls import PyTgCalls
 from dotenv import load_dotenv
 import os
 
@@ -12,9 +12,27 @@ api_hash = os.environ["api_hash"]
 string_session = os.environ["session"]
 
 client = TelegramClient(StringSession(string_session), api_id, api_hash)
-#Call = PyTgCalls(client)
-#Call2 = PyTgCalls(client_2)
+Call = PyTgCalls(client)
+Call2 = PyTgCalls(client_2)
 client.start()
+Call.start()
+glitch = False
+
+
+@client.on(events.NewMessage(outgoing=True, pattern=r"^\.glitch(?:\s+(.*))?$"))
+async def glitch(event):
+    status = event.pattern_match.group(1)
+    if not status:
+        return await event.edit("on or off?")
+    if status == "on":
+        glitch = True
+        await event.edit("glitch turned on.")
+        Call2.start()
+    if status == "off":
+        glitch = False
+        await event.edit("glitch turned off")
+    else:
+        return await event.edit("on or off?")
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"^\.boost(?:\s+(.*))?$"))
 async def boost(event):
