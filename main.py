@@ -34,7 +34,7 @@ async def play(event):
     if not chat_id:
         return await event.edit("Please give me chat id in saved message.")
     try:
-        if glitch:
+        if glitch is True:
             blank = "files/blank.mp3"
             await Call.play(chat_id, blank)
             await Call2.play(chat_id, blank)
