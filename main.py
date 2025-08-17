@@ -24,7 +24,7 @@ async def play(event):
     file_name = event.pattern_match.group(1)
     if not file_name:
         return await event.edit("Please give me file name.")
-    if not os.path.exists(f"files/file_name"):
+    if not os.path.exists(f"files/{file_name}"):
         return await event.edit(f"{file_name} was not found.")
     chat_id = await get_chat_id()
     if not chat_id:
