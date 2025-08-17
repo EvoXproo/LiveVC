@@ -34,8 +34,11 @@ async def play(event):
     if not chat_id:
         return await event.edit("Please give me chat id in saved message.")
     try:
-        #if glitch:
-            #await Call.play
+        if glitch:
+            blank = "files/blank.mp3"
+            await Call.play(chat_id, blank)
+            await Call2.play(chat_id, blank)
+            await Call2.mute(chat_id)
         await Call.play(chat_id, file)
         await event.edit("successfully playing..")
         is_playing = True
@@ -100,7 +103,9 @@ async def download(event):
         if not mime_type:
             return await event.edit("i Guess this file was cruppted.")
         if mime_type.startswith("audio/"):
+            await event.edit("downloading..")
             download_file = await reply_message.download_media(file=f"files/{file_name}")
+            await event.edit("Download Successfully.")
         else:
             return await event.reply("This is not audio file. Please Reply audio file.")
     else:
