@@ -25,7 +25,7 @@ async def play(event):
     if not file_name:
         return await event.edit("Please give me file name.")
     if not os.path.exists(f"files/file_name"):
-        return await event.edut(f"{file_name} was not found.")
+        return await event.edit(f"{file_name} was not found.")
     chat_id = await get_chat_id()
     if not chat_id:
         return await event.edit("Please give me chat id in saved message.")
