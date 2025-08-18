@@ -171,7 +171,7 @@ async def stream_end(_, update: Update):
     global queue
     chat_id = update.chat_id
     current_index += 1
-    if current_index >= len(queue:
+    if current_index >= len(queue):
         current_index = 0
     await Call.play(chat_id, queue[current_index])
      
