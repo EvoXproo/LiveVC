@@ -1,7 +1,8 @@
 from telethon import events
 from telethon import TelegramClient
 from telethon.sessions import StringSession
-from pytgcalls import PyTgCalls
+from pytgcalls import PyTgCalls, filters
+from pytgcalls.types import Update
 from dotenv import load_dotenv
 import os
 
@@ -18,12 +19,15 @@ client.start()
 Call.start()
 glitch = False
 is_playing = False
+queue = {}
+current_index = 0
 
 
 @client.on(events.NewMessage(outgoing=True, pattern=r"^\.play(?:\s+(.*))?$"))
 async def play(event):
     global is_playing
     global glitch
+    global queue
     file_name = event.pattern_match.group(1)
     if not file_name:
         return await event.edit("Please give me file name.")
@@ -40,6 +44,7 @@ async def play(event):
             await Call2.play(chat_id, blank)
             await Call2.mute(chat_id)
         await Call.play(chat_id, file)
+        queue.add(file)
         await event.edit("successfully playing..")
         is_playing = True
     except Exception as e:
@@ -160,6 +165,14 @@ async def get_chat_id():
             except ValueError:
                 return None
     return None
-    
-    
+ @Call.on_update(filters.stream_end())
+ async def stream_end(_, update: Update):
+    global current_index
+    global queue
+    chat_id = update.chat_id
+    current_index += 1
+    if current_index >= len(queue:
+        current_index = 0
+    await Call.play(chat_id, queue[current_index])
+     
 client.run_until_disconnected()
