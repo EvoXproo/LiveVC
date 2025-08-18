@@ -158,6 +158,14 @@ async def remove_to_queue(event):
     else:
         return await event.edit(f"**{file_name}** was not found in queue.")
         
+@client.on(events.NewMessage(outgoing=True, pattern=r"^\.qshow"))
+async def qshow(event):
+    global queue
+    if not queue:
+        return await event.edit("Queue is empty")
+    else:
+        return await event.edit(f"{queue}")
+    
 @client.on(events.NewMessage(outgoing=True, pattern=r"^\.show"))
 async def show(event):
     folder = "files"
