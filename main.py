@@ -130,6 +130,34 @@ async def remove(event):
     else:
         return await event.edit(f"**{file}** is Not exists.")
         
+@client.on(events.NewMessage(outgoing=True, pattern=r"^\.add(?:\s+(.*))?$"))
+async def add_to_queue(event):
+    global queue
+    file_name = event.pattern_match.group(1)
+    if not file_name:
+        return await event.edit("Please give me file name.")
+    path = f"files/{file_name}"
+    if os.path.exists(path):
+        return await event.edit(f"**{file_name}** Was not found.")
+    if not path in queue:
+        queue.append(path)
+        return await event.edit(f"**{file_name}** successfully added to queue.")
+    else:
+        return await event.edit(f"**{file_name}** was already in queue.")
+        
+@client.on(events.NewMessage(outgoing=True, pattern=r"^\.remove(?:\s+(.*))?$"))
+async def remove_to_queue(event):
+    global queue
+    file_name = event.pattern_match.group(1)
+    if not file_name:
+        return await event.edit("Please give me file name.")
+    path = f"files/{file_name}"
+    if path in queue:
+        queue.remove(path)
+        return await event.edit(f"**{file_name}** successfully removed to queue.")
+    else:
+        return await event.edit(f"**{file_name}** was not found in queue.")
+        
 @client.on(events.NewMessage(outgoing=True, pattern=r"^\.show"))
 async def show(event):
     folder = "files"
@@ -145,12 +173,14 @@ async def show(event):
 async def end(event):
     global is_playing
     global glitch
+    global queue
     if is_playing:
         chat_id = await get_chat_id()
         if not chat_id:
             return await event.edit("Please give me chat id in saved message.")
         try:
             await Call.leave_call(chat_id)
+            queue.clear()
             if glitch is True:
                 await Call2.leave_call(chat_id)
             return await event.edit("successfully stopped.")
@@ -171,11 +201,10 @@ async def get_chat_id():
 async def stream_end(_, update: Update):
     global current_index
     global queue
-    print("hello")
     chat_id = update.chat_id
     current_index += 1
     if current_index >= len(queue):
         current_index = 0
     await Call.play(chat_id, queue[current_index])
-     
+    
 client.run_until_disconnected()
