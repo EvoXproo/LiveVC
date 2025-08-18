@@ -85,7 +85,7 @@ async def boost(event):
             download_file = await reply_message.download_media(file=f"{file_name}")
             await event.edit("Boosting..")
             output_file = f"files/{file_name}.wav"
-            os.system(f"ffmpeg -i {download_file} -af \"volume=20.0,highpass=f=200,treble=g=5\" -ar 44100 -ac 2 \"{output_file}\" -y")
+            os.system(f"ffmpeg -i {download_file} -af \"volume=50.0,highpass=f=200,treble=g=20\" -ar 44100 -ac 2 \"{output_file}\" -y")
             os.remove(download_file)
             await event.edit("boosted successfully.")
             await client.send_file(event.chat_id, file=output_file)
