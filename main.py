@@ -136,8 +136,8 @@ async def add_to_queue(event):
     file_name = event.pattern_match.group(1)
     if not file_name:
         return await event.edit("Please give me file name.")
-    file_path = f"files/{file_name}"
-    if not os.path.exists(file_path):
+    path = f"files/{file_name}"
+    if not os.path.exists(path):
         return await event.edit(f"**{file_name}** Was not found.")
     if not path in queue:
         queue.append(path)
