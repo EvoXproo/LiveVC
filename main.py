@@ -166,10 +166,12 @@ async def get_chat_id():
             except ValueError:
                 return None
     return None
+    
 @Call.on_update(filters.stream_end())
 async def stream_end(_, update: Update):
     global current_index
     global queue
+    print("hello")
     chat_id = update.chat_id
     current_index += 1
     if current_index >= len(queue):
