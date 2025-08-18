@@ -145,7 +145,7 @@ async def end(event):
             return await event.edit("Please give me chat id in saved message.")
         try:
             await Call.leave_call(chat_id)
-            if glitch:
+            if glitch is True:
                 await Call2.leave_call(chat_id)
             return await event.edit("successfully stopped.")
         except Exception as e:
