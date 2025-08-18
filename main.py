@@ -19,7 +19,7 @@ client.start()
 Call.start()
 glitch = False
 is_playing = False
-queue = {}
+queue = set()
 current_index = 0
 
 
