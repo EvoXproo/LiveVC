@@ -19,7 +19,7 @@ client.start()
 Call.start()
 glitch = False
 is_playing = False
-queue = set()
+queue = []
 current_index = 0
 
 
@@ -43,8 +43,9 @@ async def play(event):
             await Call.play(chat_id, blank)
             await Call2.play(chat_id, blank)
             await Call2.mute(chat_id)
-        await Call.play(chat_id, file)
-        queue.add(file)
+        await Call.play(chat_id, file)u
+        if file not in queue:
+            queue.append(file)
         await event.edit("successfully playing..")
         is_playing = True
     except Exception as e:
