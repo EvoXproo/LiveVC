@@ -43,7 +43,7 @@ async def play(event):
             await Call.play(chat_id, blank)
             await Call2.play(chat_id, blank)
             await Call2.mute(chat_id)
-        await Call.play(chat_id, file)u
+        await Call.play(chat_id, file)
         if file not in queue:
             queue.append(file)
         await event.edit("successfully playing..")
