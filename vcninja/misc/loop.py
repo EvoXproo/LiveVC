@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 from pytgcalls import filters
-from pytgcalls.types impirt Update
+from pytgcalls.types import Update
 
 @Call.on_update(filters.stream_end())
 async def stream_end(_, update: Update):
