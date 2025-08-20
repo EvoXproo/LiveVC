@@ -1,6 +1,7 @@
 print("loading core system.")
 from vcninja.core.module_injector import *
 from vcninja.misc import loop
+from asyncio import run
 
 print("core system loaded.")
 
@@ -24,4 +25,4 @@ def import_plugins():
             importlib.import_module(f"zhunehra.plugins.{file[:-3]}")
             print(f"{file[:-3]} plugin loaded succesfully.")
     
-vcninja.run_until_complete(main())
+run(main())
