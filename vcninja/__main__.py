@@ -2,6 +2,7 @@ print("loading core system.")
 from vcninja.core.module_injector import *
 from vcninja.misc import loop
 from asyncio import run
+import importlib
 
 print("core system loaded.")
 
