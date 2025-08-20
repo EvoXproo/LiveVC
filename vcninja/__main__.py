@@ -14,7 +14,7 @@ async def main():
     await vcninja.start()
     print("telethon client successfully started.")
     print("loading plugins")
-    import_plugings()
+    import_plugins()
     print("plugins loaded successfully")
     print("VCNINJA STARTED.")
     
