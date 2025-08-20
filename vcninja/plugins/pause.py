@@ -1,4 +1,5 @@
 from vcninja.core.module_injector import *
+from vcninja.core.state import *
 
 @vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.pause"))
 async def pause(event):

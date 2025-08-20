@@ -1,8 +1,8 @@
 from vcninja.core.module_injector import *
+from vcninja.core.state import *
 
 @vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.end"))
 async def end(event):
-    print("end")
     global is_playing
     global queue
     if is_playing:
@@ -15,3 +15,5 @@ async def end(event):
             return await event.edit("successfully stopped.")
         except Exception as e:
             return await event.edit(f"Error: {str(e)}")
+    else:
+        await event.edit("Vcninja is not streaming.")
