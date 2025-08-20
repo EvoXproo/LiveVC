@@ -18,6 +18,7 @@ async def main():
     import_plugins()
     print("plugins loaded successfully")
     print("VCNINJA STARTED.")
+    await vcninja.run_until_disconnected()
     
 def import_plugins():
     path = "vcninja/plugins"
