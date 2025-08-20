@@ -23,7 +23,7 @@ def import_plugins():
     path = "vcninja/plugins"
     for file in os.listdir(path):
         if file.endswith(".py") and not file.startswith("__"):
-            importlib.import_module(f"zhunehra.plugins.{file[:-3]}")
+            importlib.import_module(f"vcninja.plugins.{file[:-3]}")
             print(f"{file[:-3]} plugin loaded succesfully.")
     
 run(main())
