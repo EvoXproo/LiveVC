@@ -14,7 +14,7 @@ async def play(event):
         return await event.edit("Please give me chat id in saved message.")
     try:
         await Call.play(chat_id, file)
-        if file not in queue:
+        if file not in state.queue:
             state.queue.append(file)
         await event.edit("successfully playing..")
         state.is_playing = True
