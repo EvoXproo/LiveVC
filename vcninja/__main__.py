@@ -1,7 +1,7 @@
 print("loading core system.")
 from vcninja.core.module_injector import *
 from vcninja.misc import loop
-from asyncio import run
+from asyncio import get_event_loop
 import importlib
 
 print("core system loaded.")
@@ -27,4 +27,5 @@ def import_plugins():
             importlib.import_module(f"vcninja.plugins.{file[:-3]}")
             print(f"{file[:-3]} plugin loaded succesfully.")
     
-run(main())
+loop = get_event_loop()
+loop.run_until_complete(main())
