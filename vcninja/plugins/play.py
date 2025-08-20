@@ -1,9 +1,5 @@
 from vcninja.core.module_injector import *
 
-is_playing = False
-queue = []
-current_index = 0
-
 @vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.play(?:\s+(.*))?$"))
 async def play(event):
     global is_playing
