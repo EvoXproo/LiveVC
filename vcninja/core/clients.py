@@ -17,3 +17,4 @@ class VCNINJA:
 vc = VCNINJA()
 vcninja = vc.vcninja
 Call = vc.Call
+Call2 = vc.Call2
