@@ -3,7 +3,6 @@ from vcninja.core.module_injector import *
 @vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.end"))
 async def end(event):
     global is_playing
-    global glitch
     global queue
     if is_playing:
         chat_id = await get_chat_id()
@@ -12,8 +11,6 @@ async def end(event):
         try:
             await Call.leave_call(chat_id)
             queue.clear()
-            if glitch is True:
-                await Call2.leave_call(chat_id)
             return await event.edit("successfully stopped.")
         except Exception as e:
             return await event.edit(f"Error: {str(e)}")
