@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"^\.show"))
+@vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.show"))
 async def show(event):
     folder = "files"
     if not os.path.exists(folder):

@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"^\.boost(?:\s+(.*))?$"))
+@vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.boost(?:\s+(.*))?$"))
 async def boost(event):
     if event.is_reply:
         file_name = event.pattern_match.group(1)
@@ -21,7 +21,6 @@ async def boost(event):
             os.system(f"ffmpeg -i {download_file} -af \"volume=50.0,highpass=f=200,treble=g=20\" -ar 44100 -ac 2 \"{output_file}\" -y")
             os.remove(download_file)
             await event.edit("boosted successfully.")
-            await client.send_file(event.chat_id, file=output_file)
         else:
             return await event.reply("This is not audio file. Please Reply audio file.")
     else:

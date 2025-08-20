@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"^\.download(?:\s+(.*))?$"))
+@vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.download(?:\s+(.*))?$"))
 async def download(event):
     if event.is_reply:
         file_name = event.pattern_match.group(1)

@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"^\.pause"))
+@vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.pause"))
 async def pause(event):
     global queue
     chat_id = await get_chat_id()

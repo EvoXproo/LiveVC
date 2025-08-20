@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"^\.remove(?:\s+(.*))?$"))
+@vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.remove(?:\s+(.*))?$"))
 async def remove(event):
     file_name = event.pattern_match.group(1)
     if not file_name:

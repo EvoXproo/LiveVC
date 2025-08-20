@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"^\.end"))
+@vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.end"))
 async def end(event):
     global is_playing
     global glitch

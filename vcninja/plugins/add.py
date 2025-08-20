@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"^\.add(?:\s+(.*))?$"))
+@vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.add(?:\s+(.*))?$"))
 async def add_to_queue(event):
     global queue
     file_name = event.pattern_match.group(1)

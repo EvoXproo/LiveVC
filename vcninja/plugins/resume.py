@@ -1,6 +1,6 @@
 from vcninja.core.module_injector import *
 
-@client.on(events.NewMessage(outgoing=True, pattern=r"^\.resume"))
+@vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.resume"))
 async def resume(event):
     global queue
     chat_id = await get_chat_id()
