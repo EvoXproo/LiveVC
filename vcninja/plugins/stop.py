@@ -2,6 +2,7 @@ from vcninja.core.module_injector import *
 
 @vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.end"))
 async def end(event):
+    print("end")
     global is_playing
     global queue
     if is_playing:
