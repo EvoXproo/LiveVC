@@ -10,6 +10,7 @@ async def end(event):
         try:
             await Call.leave_call(chat_id)
             state.queue.clear()
+            state.is_playing = False
             return await event.edit("successfully stopped.")
         except Exception as e:
             return await event.edit(f"Error: {str(e)}")
