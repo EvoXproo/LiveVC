@@ -2,16 +2,22 @@ from vcninja.core.module_injector import *
 from vcninja.core import state
 
 @vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.glitch(?:\s+(.*))?$"))
-async def play(event):
+async def glitch(event):
     file_name = event.pattern_match.group(1)
+    chat_id, my_chat_id = await get_chat_id()
+    if not chat_id:
+        return await event.edit("Please give me chat id in channel message.")
     if not file_name:
-        return await event.edit("Please give me file name.")
+        try:
+            await Call.play(chat_id, "files/blank.mp3")
+            await Call2.play(chat_id, "files/blank.mp3")
+            await Call2.mute(chat_id)
+            return await event.edit("glitch successfully..")
+        except Exception as e:
+            print(f"{str(e)}")    
     file = f"files/{file_name}"
     if not os.path.exists(file):
         return await event.edit(f"{file_name} was not found.")
-    chat_id = await get_chat_id()
-    if not chat_id:
-        return await event.edit("Please give me chat id in saved message.")
     try:
         await Call.play(chat_id, "files/blank.mp3")
         await Call2.play(chat_id, "files/blank.mp3")

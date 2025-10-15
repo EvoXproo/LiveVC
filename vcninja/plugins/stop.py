@@ -4,11 +4,19 @@ from vcninja.core import state
 @vcninja.on(events.NewMessage(outgoing=True, pattern=r"^\.end"))
 async def end(event):
     if state.is_playing:
-        chat_id = await get_chat_id()
+        chat_id, my_chat_id = await get_chat_id()
         if not chat_id:
             return await event.edit("Please give me chat id in saved message.")
         try:
             await Call.leave_call(chat_id)
+            try:
+                await Call2.leave_call(chat_id)
+            except:
+                pass    
+            try:
+                await Call.leave_call(my_chat_id)
+            except:
+                pass    
             state.queue.clear()
             state.is_playing = False
             return await event.edit("successfully stopped.")

@@ -11,7 +11,8 @@ async def stream_end(_, update: Update):
     if state.current_index >= len(state.queue):
         state.current_index = 0
     await Call.play(chat_id, state.queue[state.current_index])
-
+    
+"""
 @Call.on_update(filters.call_participant())
 async def chat_update(_, update: Update):
     chat_id = await get_chat_id()
@@ -21,9 +22,9 @@ async def chat_update(_, update: Update):
         return
     user_id = update.participant.user_id
     action = update.participant.action
-    print(action)
     if user_id == 7872695556:
         if action == GroupCallParticipant.Action.JOINED:
             await Call.leave_call(chat_id)
             state.queue.clear()
             state.is_playing = False
+"""            
